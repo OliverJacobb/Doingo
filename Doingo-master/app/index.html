@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ToDoListApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Doingo</title>
+    <script src="angular/angular.min.js"></script>
+    <script src="app.module.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/png" href="assets/Icons/icons8-checklist-48.png">
+    <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4c765e5630.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div ng-controller="homePageCtrl" class="toDoList">
+        <div class="row header">
+            <div class="col-12">
+                <h1>DOINGO</h1>
+                <span ng-if="toDoListCount !== 1">{{toDoListCount}} Open Tasks</span>
+                <span ng-if="toDoListCount === 1">{{toDoListCount}} Open Task</span>
+            </div>
+            <div class="col-12 completedTasksContainer" ng-if="toDoListCount > 0">
+                <span>{{completedToDoListCount}}/{{toDoListCount}} Tasks Completed</span>
+            </div>
+        </div>
+        <div class="row toDoListRow">
+
+            <div class="getStartedContainer text-center" ng-if="toDoListCount === 0">
+                <div>
+                    <h1 class="getStartedMessage"><strong>Add a new item below to get started!</strong></h1>
+                </div>
+
+                <div class="arrow bounce">
+                    <i class="fa fa-arrow-down fa-5x"></i>
+                </div>
+            </div>
+
+            <div class="row newItem" ng-show="toDoList.length > 0" ng-repeat="item in toDoList">
+                <div class="col-2">
+                    <button class="itemComplete btn" ng-click="item.done= !item.done; getCompletedTaskCount()"><i
+                            ng-class="{'itemCompleteIcon' : item.done}" class="far fa-check-circle fa-2x"></i></button>
+                </div>
+                <div class="col-8">
+                    <h4>{{item.project}}</h4>
+                    <p>{{item.task}}.</p>
+                </div>
+                <div class="col-2">
+                    <button class="btn deleteItem float-left" ng-click="deleteItem($index); getTaskCount()"><i
+                            class="far fa-times-circle fa-2x"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row addItemRow">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn addItem" data-toggle="modal" data-target="#newItemModal">
+                    <i class="fas fa-plus-circle fa-3x"></i>
+                </button>
+                <div class="modal fade" id="newItemModal" tabindex="-1" role="dialog" aria-labelledby="newItemModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title col-12 text-center" id="newItemModal">Add new item</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form ng-submit="addNewToDoTask(); getTaskCount()">
+                                    <div class="form-group">
+                                        <label for="projectInput"><strong>Project</strong></label>
+                                        <input type="text" class="form-control" id="projectInput"
+                                            ng-model="projectInput" placeholder="Enter the name of the project"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="taskInput"><strong>Task</strong></label>
+                                        <input type="text" class="form-control" id="taskInput" ng-model="taskInput"
+                                            placeholder="Enter your task details" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-success modalSubmitButton">Add</button>
+                                </form>
+                                <button type="button" class="btn btn-danger closeModalButton" data-dismiss="modal"
+                                    aria-label="Close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
